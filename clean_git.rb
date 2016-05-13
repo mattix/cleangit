@@ -1,5 +1,10 @@
 #!/bin/ruby
 protected_branches = [ 'master', 'develop', 'update-version' ]
+unless ARGV.length > 0
+  ARGV.each do |arg|
+    protected_branches << arg
+  end
+end
 branches = `git branch --merged`.sub('*', ' ').delete('  ').split("\n")
 branches_to_delete = branches - protected_branches
 if branches_to_delete.size > 0
